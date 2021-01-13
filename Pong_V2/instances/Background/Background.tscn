@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/img/bg.png" type="Texture" id=1]
+[ext_resource path="res://instances/Background/Background.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 320, 7.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 2, 230 )
+
+[node name="Background" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 320, 240 )
+
+[node name="TWall" type="StaticBody2D" parent="." groups=[
+"walls",
+]]
+position = Vector2( 320, 7.5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TWall"]
+shape = SubResource( 1 )
+
+[node name="BWall" type="StaticBody2D" parent="." groups=[
+"walls",
+]]
+position = Vector2( 320, 472.5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BWall"]
+shape = SubResource( 1 )
+
+[node name="Goal1" type="Area2D" parent="."]
+position = Vector2( -4, 240 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Goal1Collision" type="CollisionShape2D" parent="Goal1"]
+shape = SubResource( 2 )
+
+[node name="Goal2" type="Area2D" parent="."]
+position = Vector2( 644, 240 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Goal2Collision" type="CollisionShape2D" parent="Goal2"]
+shape = SubResource( 2 )
+
+[node name="BallTimer" type="Timer" parent="."]
+wait_time = 2.0
+[connection signal="body_exited" from="Goal1" to="." method="_on_Goal1_body_exited"]
+[connection signal="body_exited" from="Goal2" to="." method="_on_Goal2_body_exited"]
+[connection signal="timeout" from="BallTimer" to="." method="_on_BallTimer_timeout"]
